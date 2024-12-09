@@ -1,0 +1,17 @@
+---
+interface Props {
+    text: string;
+}
+const {text} =Astro.props;
+---
+
+<h1>{text}</h1>
+
+<style>
+    h1 {
+        font-size: 3.75rem;
+        color: #134e4a;
+        font-weight: 700;;
+        margin-bottom: 64px;
+    }
+</style>

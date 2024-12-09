@@ -1,0 +1,101 @@
+---
+import { type CollectionEntry, getEntryBySlug } from "astro:content";
+import { Image } from "astro:assets";
+
+type Props = {
+    post: CollectionEntry<"posts">;
+};
+
+const { post } = Astro.props;
+const author = await getEntryBySlug("authors", post.data.author);
+---
+
+<article>
+    <a
+        href={`/blog/${post.slug}`}
+        aria-label={`Read more about ${post.data.title}`}
+    >
+        <img
+            src={post.data.image}
+            alt={post.data.title}
+            width={512}
+            height={512 / 1.5}
+            class="post-image"
+        />
+    </a>
+
+    <!-- <div class="mb-4">
+        <CategoryList categories={post.data.categories} />
+    </div> -->
+
+    <a href={`/blog/${post.slug}`} class="post-title">
+        {post.data.title}
+    </a>
+
+    <p class="post-excerpt">
+        {post.body}
+    </p>
+
+    <div class="post-meta">
+        {
+            author ? (
+                <a href={`/author/${author.slug}`} class="author-link">
+                    {author.data.name}
+                </a>
+            ) : null
+        }
+
+        <span class="post-date">
+            {post.data.date}
+        </span>
+    </div>
+</article>
+
+<style>
+    .post-image {
+        border-radius: 1rem;
+        box-shadow:
+            0 20px 25px -5px rgb(0 0 0 / 0.1),
+            0 8px 10px -6px rgb(0 0 0 / 0.1);
+        margin-bottom: 1.5rem;
+        object-fit: cover;
+    }
+
+    .post-title {
+        font-size: 2.25rem;
+        color: #18181b;
+        margin-bottom: 1rem;
+        font-weight: 600;
+        display: inline-block;
+    }
+
+    .post-excerpt {
+        color: #71717a;
+        font-size: 1.5rem;
+        margin-bottom: 2.25rem;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .post-meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .author-link {
+        color: #18181b;
+        font-size: 1.5rem;
+        font-weight: 700;
+    }
+
+    .post-date {
+        color: #3f3f46;
+        font-size: 1.25rem;
+    }
+    .mb-4 {
+        margin-bottom: 16px;
+    }
+</style>
