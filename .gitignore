@@ -21,8 +21,8 @@ yarn-error.log*
 pnpm-debug.log*
 
 # Editor directories and files
-.vscode/*
-!.vscode/extensions.json
+**/.vscode/*
+!**/.vscode/extensions.json
 .idea
 .DS_Store
 *.suo
@@ -35,3 +35,6 @@ pnpm-debug.log*
 package-lock.json
 yarn.lock
 pnpm-lock.yaml 
+
+# .vs code config
+.vscode/*

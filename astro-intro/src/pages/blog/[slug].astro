@@ -1,8 +1,9 @@
 ---
 import { getCollection, type CollectionEntry } from "astro:content";
+import { Image } from "astro:assets";
 import H1 from "../../components/H1.astro";
 import Main from "../../components/Main.astro";
-import PostList from "../../components/PostList.astro";
+import Post from "../../components/Post.astro";
 import Layout from "../../layouts/Layout.astro";
 
 export const getStaticPaths = async () => {
@@ -21,15 +22,48 @@ export const getStaticPaths = async () => {
 };
 
 type Props = {
-    post: CollectionEntry<"post">;
+    post: CollectionEntry<"posts">;
 };
 
 const { post } = Astro.props;
-const { content } = await post.render();
+const { Content } = await post.render();
 ---
 
 <Layout title={post.data.title}>
 	<Main>
 		<H1 text={post.data.title} />
+        <Image
+            src={post.data.image}
+            alt={post.data.title}
+            width={800}
+            height={800 / 1.5}
+            class="post-image"
+        />
+        <div class="prose prose-lg">
+            <Content />
+        </div>
 	</Main>
 </Layout>
+
+<style>
+    .prose {
+        margin-top: 2rem;
+        max-width: 100ch;
+        text-align: left;
+    }
+    
+    .prose :global(h2) {
+        font-size: 1.875rem;
+        margin-top: 2.5rem;
+        margin-bottom: 1.25rem;
+        font-weight: 600;
+        color: #18181b;
+    }
+
+    .prose :global(p) {
+        margin-bottom: 1.25rem;
+        font-size: 1.17rem;
+        line-height: 1.75;
+        color: #3f3f46;
+    }
+</style>
